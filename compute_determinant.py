@@ -26,48 +26,7 @@ import argparse
 from itertools import islice
 import numpy as np
 import networkx as nx
-
-# Routine to create matrix digraph
-
-
-def create_graph_from_matrix_file(file):
-
-    G = nx.DiGraph()
-
-    m = np.genfromtxt(file)
-
-    a_diag = {}
-    for i in range(m.shape[0]):
-        if int(m[i, 0]) != int(m[i, 1]):
-            if m[i, 2] != 0:
-                G.add_edge(
-                    int(m[i, 0]),
-                    int(m[i, 1]),
-                    weight=-m[i, 2],
-                    lweight=np.log(np.abs(m[i, 2])),
-                    sign=-np.sign(m[i, 2]),
-                )
-                if int(m[i, 1]) in a_diag:
-                    a_diag[int(m[i, 1])] += m[i, 2]
-                else:
-                    a_diag[int(m[i, 1])] = m[i, 2]
-        else:
-            if int(m[i, 1]) in a_diag:
-                a_diag[int(m[i, 1])] += m[i, 2]
-            else:
-                a_diag[int(m[i, 1])] = m[i, 2]
-
-    for k in a_diag:
-        if a_diag[k] != 0:
-            G.add_edge(
-                0,
-                k,
-                weight=a_diag[k],
-                lweight=np.log(np.abs(a_diag[k])),
-                sign=np.sign(a_diag[k]),
-            )
-
-    return G
+import matrix_graph as mg
 
 
 def k_branchings(G, k, weight="lweight"):
@@ -108,7 +67,7 @@ args = parser.parse_args()
 
 # Create graph
 
-G = create_graph_from_matrix_file(args.file)
+G = mg.create_graph_from_matrix_file(args.file)
 
 # Compute branchings and print out results
 
@@ -153,13 +112,8 @@ print("\nDeterminant by branchings = {:f}\n".format(sum))
 # Print out result computed from LU decomposition, if desired
 
 if args.compare:
-    N = len(G.nodes) - 1
-
-    mat = np.zeros((N, N))
-
-    m = np.genfromtxt(args.file)
-
-    for k in range(m.shape[0]):
-        mat[int(m[k, 0]) - 1][int(m[k, 1]) - 1] = m[k, 2]
-
-    print("\nDeterminant by LU decomposition = {:f}\n".format(np.linalg.det(mat)))
+    print(
+        "\nDeterminant by LU decomposition = {:f}\n".format(
+            mg.compute_LU_determinant(G, args.file)
+        )
+    )
