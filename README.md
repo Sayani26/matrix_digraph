@@ -33,4 +33,16 @@ Use the matrix file created in this way with the matrix code:
 
     python compute_determinant.py mat.txt
 
+For a large matrix, computation by a sum over arborescence weights will take a long time.  You can limit the sum to get an approximation.  For example, type
+
+    python create_random_matrix.py 6 --x_max 2 > mat.txt
+    
+and then
+
+    python compute_determinant.py mat.txt --compare True --k 1000
+
+Increasing the number of terms in the sum (from, say, 1000 to 2000) better approximates the determinant but takes longer.  Note that, for a complete *N* vertex rooted digraph, there will be *(N+1)<sup>(N-1)</sup>* arborescences, so, for *N=6*, there will be 16,807 total arborescences.
+
+    
+
 
