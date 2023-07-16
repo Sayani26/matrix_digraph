@@ -11,11 +11,13 @@ The code will print out the graph arborescences, their weights, and the sum (the
 
      python compute_determinant.py example_data/mat.txt --compare True
 
-To create figures of the arborescences, type
+To create figures of the arborescences, type, for example,
 
      python compute_determinant.py example_data/mat2.txt --output_dir out
 
 The output files are pdfs in the *out* directory.  They are labeled in decreasing order of the absolute value of the arborescence weight.
+
+The files *example_data/mat3.txt* and *example_data/mat4.txt* provide examples of *reduced matrices*.  Use these data as example input for studying the rooted version of the *all minors theorem*.
 
 ## Create random matrices
 
