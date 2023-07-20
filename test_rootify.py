@@ -26,10 +26,12 @@ import networkx as nx
 import copy
 import rootify as rfy
 import matrix_graph as mg
+import os.path
 
 # A processing function--keeps track of cumulative weight and subgraph number
 
-def my_func(G, data, num):
+def my_func(G, data, num, rooted_list):
+    rooted_list.append(G)
     p = 1
     for u, v, d in G.edges(data=True):
         p *= d['weight']
@@ -59,6 +61,14 @@ parser.add_argument(
     help="compare determinant to that computed by LU decomposition",
 )
 
+parser.add_argument(
+    "--getpdfs",
+    metavar="getpdfs",
+    type=bool,
+    default=False,
+    help="get pdf files of the fully rooted graphs",
+)
+
 args = parser.parse_args()
 
 # Create graph
@@ -69,7 +79,8 @@ G = mg.create_graph_from_matrix_file(args.file)
 
 det =[0]
 num = [0]
-f = lambda G: my_func(G, det, num)
+rooted_list = []
+f = lambda G: my_func(G, det, num, rooted_list)
 
 # Rootify
 
@@ -79,6 +90,29 @@ rfy.rootify(G, add_func=my_add_func, process_func=f)
 # the number of final rooted graphs (N! for complete graph)
 
 print(det[0], num[0])
+
+# Create pdfs of the rooted graphs
+if args.getpdfs:
+    i = 0
+    current_directory = os.getcwd()
+    final_directory = os.path.join(current_directory, r'out_root')
+    if not os.path.exists(final_directory):
+        os.makedirs(final_directory)
+
+    output_path = 'out_root/'
+    for g in rooted_list:
+        A = nx.nx_agraph.to_agraph(g)
+        A.edge_attr["color"] = "black"
+        w  = 1
+        for u, v, d in g.edges(data=True):
+            A.get_edge(u, v).attr["label"] = "{:.1f}".format(d["weight"]) 
+            w *= d["weight"]
+        A.graph_attr["label"] = "Branching weight = {:.1f}".format(w)
+        A.graph_attr["fontcolor"] = "black"
+        A.layout(prog="dot")
+        A.draw(output_path + 'out_' + str(i) + '.pdf')
+        i += 1
+
 
 # Print out result computed from LU decomposition, if desired
 
