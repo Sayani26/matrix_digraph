@@ -43,6 +43,42 @@ and then
 
 Increasing the number of terms in the sum (from, say, 1000 to 2000) better approximates the determinant but takes longer.  Note that, for a complete *N* vertex rooted digraph, there will be *(N+1)<sup>(N-1)</sup>* arborescences, so, for *N=6*, there will be 16,807 total arborescences.
 
+## Factoring determinants
+
+This code implements the factoring algorithm. To run this code have these scripts - factoring_code.py, numerical.py, label.py, rootify.py and matrix_graph.py in the same directory. To get started, type
+
+     python factoring_code.py
+
+The code will ask for a user input.
+
+     Please enter numerical or label (default is numerical):
+
+Choosing numerical will run the code on graph that has numerical edge weight and it will give a numerical value as determinant. Choosing 'label' will run the code on graph with string edge weights (a<sub>ij</sub>) and the determinant will be a string. 
+
+If the choice is label, then the following is asked,
+
+     Enter instruction in the format 'python label.py N --options True':
+
+label.py is the script that performs the factoring algorithm on a graph with 'N'  vertices and string edge weights. To get PDFs of all the isolated branchings in a separate folder, type
+
+     python label.py N --getpdfs True
+
+If PDFs are not required as output simply omit '--getpdfs True' from the previous command. 
+
+If the choice is numerical, the following is asked
+
+     Enter instruction in the format 'python numerical.py example_data/filename.txt --options True':
+
+numerical.py is the script that performs the factoring algorithm on a graph constructed from the matrix given as input. If you desire to use one of the matrices already in the example_data directory, type
+
+        python numerical.py example_data/filename.txt --options True'
+
+If you choose to use one of your own matrices, type
+
+     python numerical.py filename.txt --options True'
+
+The 'options' include comparing the determinant obtained from the factoring code with the determinant obtained by LU decomposition of the given matrix and to get PDFs of all the isolated branchings whose branching weights sum upto the determinant. To compare type '--compare' and to get PDFs type '--getpdfs' in place of '--options' in the previous command. To get nothing but the output omit '--options True' from the previous command.
+
     
 
 
