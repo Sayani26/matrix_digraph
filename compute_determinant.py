@@ -109,11 +109,11 @@ for b in branchings:
 print("\nNumber of branchings = {:d}\n".format(len(branchings)))
 print("\nDeterminant by branchings = {:f}\n".format(sum))
 
-# Print out result computed from LU decomposition, if desired
+# Compare to result computed from LU decomposition, if desired
 
 if args.compare:
     print(
         "\nDeterminant by LU decomposition = {:f}\n".format(
-            mg.compute_LU_determinant(G, args.file)
+            mg.compute_LU_determinant(args.file)
         )
     )

@@ -66,7 +66,9 @@ def create_graph_from_matrix_file(file):
 
     return G
 
-def compute_LU_determinant(G, file):
+def compute_LU_determinant(file):
+
+    G = create_graph_from_matrix_file(file)
     N = len(G.nodes) - 1
 
     mat = np.zeros((N, N))
