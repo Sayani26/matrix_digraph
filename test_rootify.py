@@ -119,6 +119,6 @@ if args.getpdfs:
 if args.compare:
     print(
         "\nDeterminant by LU decomposition = {:f}\n".format(
-            mg.compute_LU_determinant(G, args.file)
+            mg.compute_LU_determinant(args.file)
         )
     )
