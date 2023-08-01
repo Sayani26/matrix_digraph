@@ -1,4 +1,4 @@
-# siam_review_2023
+d# siam_review_2023
 Supplementary materials for the paper *Digraph Arborescences and Matrix Determinants*.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
 ## Compute matrix determinants
@@ -49,7 +49,7 @@ The code *factor_determinant.py* implements the factoring algorithm in the main 
 
      python factor_determinant.py example_data/mat.txt
 
-The output shows the determinant value for the input matrix in terms of arc labels, as computed by the factorization/isolation procedure described in the paper paper.  To instead compute the numerical value of the determinant, type
+The output shows the determinant value for the input matrix in terms of arc labels, as computed by the factorization/isolation procedure described in the paper.  To instead compute the numerical value of the determinant, type
 
      python factor_determinant.py example_data/mat.txt --calc_type numeric
 
