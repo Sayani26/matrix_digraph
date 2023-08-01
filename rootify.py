@@ -20,9 +20,10 @@
 #
 # //////////////////////////////////////////////////////////////////////////////
 
+# This code uses a depth-first search approach to isolating all vertices.
+
 import networkx as nx
 import copy
-
 
 def default_add_func(G, root, u, v):
     if G.has_edge(root, v):
@@ -70,93 +71,3 @@ def rootify(G, add_func=None, process_func=None):
 
             rootify(G_c, add_func=add_func, process_func=process_func)
             processed_root_edges.append((root[0], r))
-
-
-def y_rootify(
-    G,
-    start_vertex,
-    add_func=None,
-    process_func=None,
-    marked_property="marked",
-    marked_value="yes",
-):
-
-    #  Find the root
-
-    root = [node for node in G.nodes if G.in_degree(node) == 0]
-
-    if len(root) != 1:
-        print("Graph not properly rooted.")
-        exit()
-
-    #  Make a copy of the graph, find the rooted vertex, mark, and remove in arcs
-
-    G_c = copy.deepcopy(G)
-
-    for e in [(u, v) for u, v in G.in_edges(start_vertex) if u != root[0]]:
-        G_c.remove_edge(*e)
-
-    G_c[root[0]][start_vertex][marked_property] = marked_value
-
-    #  Call the rootifier
-
-    _y_rootify(G_c, add_func, process_func, marked_property, marked_value)
-
-
-def _y_rootify(
-    G,
-    add_func=None,
-    process_func=None,
-    marked_property="marked",
-    marked_value="yes",
-):
-
-    #   Find the root
-
-    root = [node for node in G.nodes if G.in_degree(node) == 0]
-
-    if len(root) != 1:
-        print("Graph not properly rooted.")
-        exit()
-
-    #   Find non-isolated marked nodes
-
-    v_r = [
-        v
-        for u, v, a in G.out_edges(root[0], data=True)
-        if G.out_degree[v] > 0 and marked_property in a
-    ]
-
-    #   Rootify if no non-isolated marked nodes
-
-    if len(v_r) == 0:
-        rootify(G, add_func=add_func, process_func=process_func)
-        return
-
-    #   Otherwise recurse
-
-    else:
-        processed_edges = []
-        for r in v_r:
-            for u, v, a in G.out_edges(r, data=True):
-                G_c = copy.deepcopy(G)
-                for e in processed_edges:
-                    G_c.remove_edge(*e)
-                for e in [(u, w) for (u, w) in G_c.in_edges(v)]:
-                    G_c.remove_edge(*e)
-                G_c.add_edge(root[0], v)
-                for p in a:
-                    G_c[root[0]][v][p] = a[p]
-                G_c[root[0]][v]["marked"] = "yes"
-                _y_rootify(G_c, add_func, process_func, marked_property, marked_value)
-                processed_edges.append((u, v))
-
-        G_c = copy.deepcopy(G)
-        marked_nodes = [
-            v for u, v, a in G.out_edges(root[0], data=True) if marked_property in a
-        ]
-        for v in marked_nodes:
-            for e in G.out_edges(v):
-                G_c.remove_edge(*e)
-
-        rootify(G_c, add_func=add_func, process_func=process_func)

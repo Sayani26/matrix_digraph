@@ -1,3 +1,25 @@
+# //////////////////////////////////////////////////////////////////////////////
+#  Copyright (c) 2023 Clemson University.
+#
+#  This file was originally written by Sayani Ghosh and Bradley S. Meyer.
+#
+#  This is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This software is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this software; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+#  USA
+#
+# //////////////////////////////////////////////////////////////////////////////
+
 import networkx as nx
 import glob
 import rootify as rfy
@@ -21,15 +43,6 @@ def label_func(G, v_det, num, rooted_list):
         p += "(" + d["label"] + ")"
     v_det.append(p)
     num[0] += 1
-
-
-# An add function--in fact identical to default
-
-def num_add_func(G, root, u, v):
-    if G.has_edge(root, v):
-        G.get_edge_data(root, v)['weight'] += G[u][v]['weight']
-    else:
-        G.add_edge(root, v, weight = G[u][v]['weight'])
 
 def label_add_func(G, root, u, v):
     if G.has_edge(root, v):
@@ -88,7 +101,7 @@ if args.calc_type == "label":
 elif args.calc_type == "numeric":
     det = [0]
     f = lambda G: num_func(G, det, num, rooted_list)
-    rfy.rootify(G, add_func=num_add_func, process_func=f)
+    rfy.rootify(G, process_func=f)  # Use default add function
     s_det = "\nDeterminant = {:f}".format(det[0])
 else:
     exit("{:s} is anncorrect calcution type".format(args.calc_type))
