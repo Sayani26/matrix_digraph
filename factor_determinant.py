@@ -104,7 +104,7 @@ elif args.calc_type == "numeric":
     rfy.rootify(G, process_func=f)  # Use default add function
     s_det = "\nDeterminant = {:f}".format(det[0])
 else:
-    exit("{:s} is anncorrect calcution type".format(args.calc_type))
+    exit("{:s} is an incorrect calcution type".format(args.calc_type))
 
 print(s_det + "\n")
 

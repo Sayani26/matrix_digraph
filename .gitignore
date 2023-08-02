@@ -1,4 +1,9 @@
 *.txt
 out*
+*.pdf
+*.log
+*.aux
+*.out
+*.thm
 __pycache__
 .DS_Store
