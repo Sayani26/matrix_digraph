@@ -45,40 +45,21 @@ Increasing the number of terms in the sum (from, say, 1000 to 2000) better appro
 
 ## Factoring determinants
 
-This code implements the factoring algorithm. To run this code have these scripts - factoring_code.py, numerical.py, label.py, rootify.py and matrix_graph.py in the same directory. To get started, type
+The code *factor_determinant.py* implements the factoring algorithm in the main paper.  The output determinant is either a numerical value or a sum of products of arc labels.  The default calculation is for arc labels.  To run the basic calculation, type
 
-     python factoring_code.py
+     python factor_determinant.py example_data/mat.txt
 
-The code will ask for a user input.
+The output shows the determinant value for the input matrix in terms of arc labels, as computed by the factorization/isolation procedure described in the paper.  To instead compute the numerical value of the determinant, type
 
-     Please enter numerical or label (default is numerical):
+     python factor_determinant.py example_data/mat.txt --calc_type numeric
 
-Choosing numerical will run the code on graph that has numerical edge weight and it will give a numerical value as determinant. Choosing 'label' will run the code on graph with string edge weights (a<sub>ij</sub>) and the determinant will be a string. 
+To output the individual fully isolated (rooted) graphs for the matrix, type
 
-If the choice is label, then the following is asked,
+     python factor_determinant.py example_data/mat.txt --output_dir out_label --calc_type label
 
-     Enter instruction in the format 'python label.py N --options True':
+The output pdfs will be in the directory *out_label*.  Note that, in this case, the *--calc_type label* option is not necessary since the label calculation is the default.  To produce the individual numerical graphs, type
 
-label.py is the script that performs the factoring algorithm on a graph with 'N'  vertices and string edge weights. To get PDFs of all the isolated branchings in a separate folder, type
+     python factor_determinant.py example_data/mat.txt --output_dir out_numeric --calc_type numeric
 
-     python label.py N --getpdfs True
-
-If PDFs are not required as output simply omit '--getpdfs True' from the previous command. 
-
-If the choice is numerical, the following is asked
-
-     Enter instruction in the format 'python numerical.py example_data/filename.txt --options True':
-
-numerical.py is the script that performs the factoring algorithm on a graph constructed from the matrix given as input. If you desire to use one of the matrices already in the example_data directory, type
-
-        python numerical.py example_data/filename.txt --options True'
-
-If you choose to use one of your own matrices, type
-
-     python numerical.py filename.txt --options True'
-
-The 'options' include comparing the determinant obtained from the factoring code with the determinant obtained by LU decomposition of the given matrix and to get PDFs of all the isolated branchings whose branching weights sum upto the determinant. To compare type '--compare' and to get PDFs type '--getpdfs' in place of '--options' in the previous command. To get nothing but the output omit '--options True' from the previous command.
-
-    
-
+Again, the pdfs will be in the *out_numeric*.  It is, of course, possible to use other input matrices, for example, use *example_data/mat2.txt* or a matrix computed with the *compute_random_matrix.py* code as input.
 
