@@ -116,7 +116,7 @@ Other permuted matrices in the sum yield zero determinant, so the surviving term
 
     \section{Factoring Example}  \label{append:factoring}
 
-Consider the matrix digraph in Fig. \ref{fig:3digraph}.  To factor the determinant of the corresponding matrix (Eq. (\ref{eq:A})), first create a digraph $G_1$ that is explicitly rooted at vertex $1$ and a digraph ${\bar G}_1$ that is explicitly not rooted at vertex $1$.  $G_1$ is shown in Fig. \ref{fig:g1}(a).  Then isolate vertex $1$ by moving the arcs $(1,2)$ and $(1,3)$ to $(0, 2)$ and $(0, 3)$, respectively, and combining with the existing arcs.  This results in the digraph in Fig. \ref{fig:g1}(b).
+Consider the matrix digraph in Fig. \ref{fig:3digraph}.  To factor the determinant of the corresponding matrix (Eq. (\ref{eq:A})), first create a digraph $\Gamma_1$ that is explicitly rooted at vertex $1$ and a digraph ${\bar \Gamma}_1$ that is explicitly not rooted at vertex $1$.  $\Gamma_1$ is shown in Fig. \ref{fig:g1}(a).  Then isolate vertex $1$ by moving the arcs $(1,2)$ and $(1,3)$ to $(0, 2)$ and $(0, 3)$, respectively, and combining with the existing arcs.  This results in the digraph in Fig. \ref{fig:g1}(b).
 
 \begin{figure}[htb!]
 \centering 
@@ -137,7 +137,7 @@ Consider the matrix digraph in Fig. \ref{fig:3digraph}.  To factor the determina
     \draw[->, black] (4) edge [bend right] node [left, below right] {$v_{32}$} (3);
     \draw[->, black] (3) edge [bend right] node [left, below right, pos = 0.6] {$v_{23}$} (4);
     \end{tikzpicture} 
-    \caption{$G_1$ before isolation.}
+    \caption{$\Gamma_1$ before isolation.}
   \end{subfigure} 
   \hspace{6em}
   \begin{subfigure}[b]{0.25\textwidth}
@@ -155,13 +155,13 @@ Consider the matrix digraph in Fig. \ref{fig:3digraph}.  To factor the determina
     \draw[->, black] (4) edge [bend right] node [left, below right] {$v_{32}$} (3);
     \draw[->, black] (3) edge [bend right] node [left, below right, pos = 0.6] {$v_{23}$} (4);
     \end{tikzpicture} 
-    \caption{$G_1$ after isolation.}
+    \caption{$\Gamma_1$ after isolation.}
     \end{subfigure}
 
-    \caption{Digraph $G_1$ explicitly rooted at vertex $1$.}\label{fig:g1}
+    \caption{Digraph $\Gamma_1$ explicitly rooted at vertex $1$.}\label{fig:g1}
 \end{figure}
 
-Next, explicitly root the digraph in Fig. \ref{fig:g1} at vertex $2$ to obtain the digraph $G_{1,2}$ and isolate vertex $2$ in that digraph to obtain the fully isolated digraph in Fig. \ref{fig:g1_23}(a).  Similarly explicitly root the digraph in Fig. \ref{fig:g1} at vertex $3$ to obtain the fully isolated digraph in Fig. \ref{fig:g1_23}(b).
+Next, explicitly root the digraph in Fig. \ref{fig:g1} at vertex $2$ to obtain the digraph $\Gamma_{1,2}$ and isolate vertex $2$ in that digraph to obtain the fully isolated digraph in Fig. \ref{fig:g1_23}(a).  Similarly explicitly root the digraph in Fig. \ref{fig:g1} at vertex $3$ to obtain the fully isolated digraph in Fig. \ref{fig:g1_23}(b).
 
 \begin{figure}[htb!]
 \centering 
@@ -177,7 +177,7 @@ Next, explicitly root the digraph in Fig. \ref{fig:g1} at vertex $2$ to obtain t
     \draw[->] (1) -- node[midway, above right]{$(v_{12}+v_{22})$} (3);
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.7]{$(v_{13}+v_{23}+v_{33})$} (4);
     \end{tikzpicture} 
-    \caption{$G_{1,2}$ after isolation.}  
+    \caption{$\Gamma_{1,2}$ after isolation.}  
   \end{subfigure} 
   \hspace{6em}
   \begin{subfigure}[b]{0.25\textwidth}
@@ -193,14 +193,14 @@ Next, explicitly root the digraph in Fig. \ref{fig:g1} at vertex $2$ to obtain t
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.6]{$(v_{13}+v_{33})$} (4);
 
     \end{tikzpicture} 
-    \caption{$G_{1,3}$ after isolation.}
+    \caption{$\Gamma_{1,3}$ after isolation.}
     \end{subfigure}
 
-    \caption{Fully isolated $G_1$ digraphs.  (a) $W(B) = v_{11}(v_{12}+v_{22})(v_{13}+v_{23}+v_{33})$. (b) $W(B) = v_{11}v_{32}(v_{13}+v_{33})$.}
+    \caption{Fully isolated $\Gamma_1$ digraphs.  (a) $W(B) = v_{11}(v_{12}+v_{22})(v_{13}+v_{23}+v_{33})$. (b) $W(B) = v_{11}v_{32}(v_{13}+v_{33})$.}
 \label{fig:g1_23}
 \end{figure}
 
-Now return to ${\bar G}_1$, which is not rooted at vertex $1$.  From that digraph create a digraph $G_2$ explicitly rooted at vertex $2$ and digraph ${\bar G}_2$, which is explicitly not rooted at vertex $2$.  For this example, ${\bar G}_2$ is explicitly only rooted at vertex $3$, so ${\bar G}_2 = G_3$.  Follow the isolation procedure on $G_2$ to obtain the fully isolated digraphs in Fig. \ref{fig:g2}.
+Now return to ${\bar \Gamma}_1$, which is not rooted at vertex $1$.  From that digraph create a digraph $\Gamma_2$ explicitly rooted at vertex $2$ and digraph ${\bar \Gamma}_2$, which is explicitly not rooted at vertex $2$.  For this example, ${\bar \Gamma}_2$ is explicitly only rooted at vertex $3$, so ${\bar \Gamma}_2 = \Gamma_3$.  Follow the isolation procedure on $\Gamma_2$ to obtain the fully isolated digraphs in Fig. \ref{fig:g2}.
 
 \begin{figure}[htb!]
 \centering 
@@ -216,7 +216,7 @@ Now return to ${\bar G}_1$, which is not rooted at vertex $1$.  From that digrap
     \draw[->] (1) -- node[midway, above right]{$v_{22}$} (3);
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.7]{$(v_{33} + v_{23})$} (4);
     \end{tikzpicture} 
-    \caption{$G_{2,1}$ after isolation.}
+    \caption{$\Gamma_{2,1}$ after isolation.}
   \end{subfigure} 
   \hspace{6em}
   \begin{subfigure}[b]{0.25\textwidth}
@@ -232,13 +232,13 @@ Now return to ${\bar G}_1$, which is not rooted at vertex $1$.  From that digrap
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.6]{$v_{13}$} (4);
 
     \end{tikzpicture} 
-    \caption{$G_{2,3}$ after isolation.} 
+    \caption{$\Gamma_{2,3}$ after isolation.} 
     \end{subfigure}
 
-    \caption{Fully isolated $G_2$ digraphs.  (a) $W(B) = (v_{21}+v_{31})(v_{22})(v_{33} + v_{23})$. (b) $W(B) =v_{21}v_{22}v_{13}$.}\label{fig:g2}
+    \caption{Fully isolated $\Gamma_2$ digraphs.  (a) $W(B) = (v_{21}+v_{31})(v_{22})(v_{33} + v_{23})$. (b) $W(B) =v_{21}v_{22}v_{13}$.}\label{fig:g2}
 \end{figure}
 
-Similarly follow the isolation procedure for $G_3$ to obtain the digraphs in Fig. \ref{fig:g3}.
+Similarly follow the isolation procedure for $\Gamma_3$ to obtain the digraphs in Fig. \ref{fig:g3}.
 
 \begin{figure}[t!]
 \centering 
@@ -254,7 +254,7 @@ Similarly follow the isolation procedure for $G_3$ to obtain the digraphs in Fig
     \draw[->] (1) -- node[midway, above right]{$(v_{12}+v_{32})$} (3);
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.7]{$v_{33}$} (4);
     \end{tikzpicture} 
-    \caption{$G_{3,1}$ after isolation.}
+    \caption{$\Gamma_{3,1}$ after isolation.}
   \end{subfigure} 
   \hspace{6em}
   \begin{subfigure}[b]{0.25\textwidth}
@@ -270,10 +270,10 @@ Similarly follow the isolation procedure for $G_3$ to obtain the digraphs in Fig
     \draw[->] (1) edge [bend right = 100] node[midway, above right, pos = 0.6]{$v_{33}$} (4);
 
     \end{tikzpicture} 
-    \caption{$G_{3,2}$ after isolation.}
+    \caption{$\Gamma_{3,2}$ after isolation.}
     \end{subfigure}
 
-    \caption{Fully isolated $G_3$ digraphs.  (a) $W(B) = v_{31}(v_{12}+v_{32})v_{33}$.  (b) $W(B) = v_{21}v_{32}v_{33}$.} \label{fig:g3}
+    \caption{Fully isolated $\Gamma_3$ digraphs.  (a) $W(B) = v_{31}(v_{12}+v_{32})v_{33}$.  (b) $W(B) = v_{21}v_{32}v_{33}$.} \label{fig:g3}
 \end{figure}
 
 The sum of all the arborescence weights is given by the following equation which, when expanded, is equal to the determinant of the matrix given by Eq. \ref{eq:example_det}
