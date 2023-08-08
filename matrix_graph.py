@@ -25,6 +25,7 @@ import networkx as nx
 
 # Routine to create matrix digraph
 
+
 def create_graph_from_matrix_file(file):
 
     G = nx.DiGraph()
@@ -41,7 +42,7 @@ def create_graph_from_matrix_file(file):
                     weight=-m[i, 2],
                     lweight=np.log(np.abs(m[i, 2])),
                     sign=-np.sign(m[i, 2]),
-                    label='v{:d}{:d}'.format(int(m[i,0]), int(m[i,1]))
+                    label="v{:d}{:d}".format(int(m[i, 0]), int(m[i, 1])),
                 )
                 if int(m[i, 1]) in a_diag:
                     a_diag[int(m[i, 1])] += m[i, 2]
@@ -61,22 +62,24 @@ def create_graph_from_matrix_file(file):
                 weight=a_diag[k],
                 lweight=np.log(np.abs(a_diag[k])),
                 sign=np.sign(a_diag[k]),
-                label='v{:d}{:d}'.format(k, k)
+                label="v{:d}{:d}".format(k, k),
             )
 
     return G
 
+# Routine to compute matrix determinant by LU decomposition
+
 def compute_LU_determinant(file):
 
-    G = create_graph_from_matrix_file(file)
-    N = len(G.nodes) - 1
+    m = np.genfromtxt(file)
+
+    N = max(
+        np.hstack((np.asarray(m[:, 0], dtype="int"), np.asarray(m[:, 1], dtype="int")))
+    )
 
     mat = np.zeros((N, N))
-
-    m = np.genfromtxt(file)
 
     for k in range(m.shape[0]):
         mat[int(m[k, 0]) - 1][int(m[k, 1]) - 1] = m[k, 2]
 
     return np.linalg.det(mat)
-
