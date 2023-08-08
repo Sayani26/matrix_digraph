@@ -27,13 +27,15 @@ import matrix_graph as mg
 import os.path
 import argparse
 
+
 def num_func(G, data, num, rooted_list):
     rooted_list.append(G)
     p = 1
     for u, v, d in G.edges(data=True):
-        p *= d['weight']
+        p *= d["weight"]
     data[0] += p
     num[0] += 1
+
 
 def label_func(G, v_det, num, rooted_list):
     rooted_list.append(G)
@@ -43,6 +45,7 @@ def label_func(G, v_det, num, rooted_list):
         p += "(" + d["label"] + ")"
     v_det.append(p)
     num[0] += 1
+
 
 def label_add_func(G, root, u, v):
     if G.has_edge(root, v):
@@ -63,7 +66,7 @@ parser.add_argument(
     metavar="calc_type",
     type=str,
     default="label",
-    help="calculation type (\"numeric\" or \"label\", default=\"label\")"
+    help='calculation type ("numeric" or "label", default="label")',
 )
 
 parser.add_argument(

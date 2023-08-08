@@ -25,6 +25,7 @@
 import networkx as nx
 import copy
 
+
 def default_add_func(G, root, u, v):
     if G.has_edge(root, v):
         G.get_edge_data(root, v)["weight"] += G[u][v]["weight"]

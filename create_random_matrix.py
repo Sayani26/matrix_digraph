@@ -60,5 +60,4 @@ for i in range(A.shape[0]):
 
 for i in range(A.shape[0]):
     for j in range(A.shape[1]):
-        print(i + 1, j + 1, A[i, j]) 
-           
+        print(i + 1, j + 1, A[i, j])
