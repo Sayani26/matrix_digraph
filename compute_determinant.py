@@ -114,6 +114,6 @@ print("\nDeterminant by branchings = {:f}\n".format(sum))
 if args.compare:
     print(
         "\nDeterminant by LU decomposition = {:f}\n".format(
-            mg.compute_LU_determinant(args.file)
+            mg.compute_LU_determinant_from_graph(G)
         )
     )
