@@ -70,6 +70,14 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--prec",
+    metavar="prec",
+    type=int,
+    default=2,
+    help="precision for numerical output of arc and branching weights",
+)  
+
+parser.add_argument(
     "--output_dir",
     metavar="output_dir",
     type=str,
@@ -105,7 +113,7 @@ elif args.calc_type == "numeric":
     det = [0]
     f = lambda G: num_func(G, det, num, rooted_list)
     rfy.rootify(G, process_func=f)  # Use default add function
-    s_det = "\nDeterminant = {:f}".format(det[0])
+    s_det = "\nDeterminant = {:.{prec}f}".format(det[0], prec=args.prec)
 else:
     exit("{:s} is an incorrect calcution type".format(args.calc_type))
 
@@ -129,9 +137,9 @@ if args.output_dir:
         else:
             w = 1
             for u, v, d in g.edges(data=True):
-                A.get_edge(u, v).attr["label"] = "{:.1f}".format(d["weight"])
+                A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(d["weight"], prec=args.prec)
                 w *= d["weight"]
-            s_w = "{:f}".format(w)
+            s_w = "{:.{prec}f}".format(w, prec=args.prec)
 
         A.graph_attr["label"] = "Branching weight = " + s_w
         A.graph_attr["fontcolor"] = "black"

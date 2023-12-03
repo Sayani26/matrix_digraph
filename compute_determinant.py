@@ -55,13 +55,26 @@ parser.add_argument(
     help="output directory for branching graph pdfs)",
 )
 parser.add_argument(
+    "--prec",
+    metavar="prec",
+    type=int,
+    default=2,
+    help="precision for outputting arc and branching weights",
+)
+parser.add_argument(
+    "--write_graph",
+    metavar="write_graph",
+    type=bool,
+    default=False,
+    help="output the graph",
+)
+parser.add_argument(
     "--compare",
     metavar="compare",
     type=bool,
     default=False,
     help="compare determinant to that computed by LU decomposition",
 )
-
 
 args = parser.parse_args()
 
@@ -78,6 +91,13 @@ if args.output_dir:
         files = glob.glob(args.output_dir + "/*")
         for f in files:
             os.remove(f)
+    if args.write_graph:
+        A = nx.nx_agraph.to_agraph(G)
+        A.edge_attr["color"] = "black"
+        for u, v, d in G.edges(data=True):
+            A.get_edge(u, v).attr["label"] = "{:.0f}".format(d["weight"])
+        A.layout(prog="dot")
+        A.draw(args.output_dir + "/graph.pdf")
 else:
     print("Branchings\n")
 
@@ -94,26 +114,26 @@ for b in branchings:
         A = nx.nx_agraph.to_agraph(G)
         A.edge_attr["color"] = "black"
         for u, v, d in G.edges(data=True):
-            A.get_edge(u, v).attr["label"] = "{:.1f}".format(d["weight"])
+            A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(d["weight"], prec=args.prec)
         for u, v, d in b.edges(data=True):
             A.get_edge(u, v).attr["color"] = "red"
             A.get_edge(u, v).attr["fontcolor"] = "red"
-        A.graph_attr["label"] = "Branching weight = {:.1f}".format(w)
+        A.graph_attr["label"] = "Branching weight = {:.{prec}f}".format(w, prec=args.prec)
         A.graph_attr["fontcolor"] = "red"
         A.layout(prog="dot")
         A.draw(args.output_dir + "/" + str(i) + ".pdf")
         i += 1
     else:
-        print(b.edges, ": Weight = {:f}".format(w))
+        print(b.edges, ": Weight = {:.{prec}f}".format(w, prec=args.prec))
 
 print("\nNumber of branchings = {:d}\n".format(len(branchings)))
-print("\nDeterminant by branchings = {:f}\n".format(sum))
+print("\nDeterminant by branchings = {:.{prec}f}\n".format(sum, prec=args.prec))
 
 # Compare to result computed from LU decomposition, if desired
 
 if args.compare:
     print(
-        "\nDeterminant by LU decomposition = {:f}\n".format(
-            mg.compute_LU_determinant_from_graph(G)
+        "\nDeterminant by LU decomposition = {:.{prec}f}\n".format(
+            mg.compute_LU_determinant_from_graph(G), prec=args.prec
         )
     )

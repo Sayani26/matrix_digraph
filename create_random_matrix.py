@@ -45,6 +45,14 @@ parser.add_argument(
     help="maximum absolute value of off-diagonal element",
 )
 
+parser.add_argument(
+    "--fixed_col_sum",
+    metavar="fixed_col_sum",
+    type=float,
+    default=None,
+    help="fixed value for each column (default: not set)"
+)
+
 args = parser.parse_args()
 
 A = np.zeros((args.N, args.N))
@@ -52,7 +60,10 @@ A = np.zeros((args.N, args.N))
 for i in range(A.shape[0]):
     for j in range(A.shape[1]):
         if i == j:
-            A[i, j] += args.x_max * rng.random()
+            if args.fixed_col_sum:
+                A[i, j] += args.fixed_col_sum
+            else:
+                A[i, j] += args.x_max * rng.random()
         else:
             aij = args.x_max * rng.random()
             A[i, j] -= aij
