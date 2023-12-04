@@ -1,4 +1,5 @@
-# siam_review_2023
+# matrix_graph
+
 Supplementary materials for the paper *Digraph Arborescences and Matrix Determinants*.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
 ## Preliminaries
