@@ -31,7 +31,9 @@ import matrix_graph as mg
 
 def k_branchings(G, k, weight="lweight"):
     if k:
-        return list(islice(nx.ArborescenceIterator(G, weight=weight, minimum=False), k))
+        return list(
+            islice(nx.ArborescenceIterator(G, weight=weight, minimum=False), k)
+        )
     else:
         return list(nx.ArborescenceIterator(G, weight=weight, minimum=False))
 
@@ -114,11 +116,15 @@ for b in branchings:
         A = nx.nx_agraph.to_agraph(G)
         A.edge_attr["color"] = "black"
         for u, v, d in G.edges(data=True):
-            A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(d["weight"], prec=args.prec)
+            A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(
+                d["weight"], prec=args.prec
+            )
         for u, v, d in b.edges(data=True):
             A.get_edge(u, v).attr["color"] = "red"
             A.get_edge(u, v).attr["fontcolor"] = "red"
-        A.graph_attr["label"] = "Branching weight = {:.{prec}f}".format(w, prec=args.prec)
+        A.graph_attr["label"] = "Branching weight = {:.{prec}f}".format(
+            w, prec=args.prec
+        )
         A.graph_attr["fontcolor"] = "red"
         A.layout(prog="dot")
         A.draw(args.output_dir + "/" + str(i) + ".pdf")
@@ -127,7 +133,9 @@ for b in branchings:
         print(b.edges, ": Weight = {:.{prec}f}".format(w, prec=args.prec))
 
 print("\nNumber of branchings = {:d}\n".format(len(branchings)))
-print("\nDeterminant by branchings = {:.{prec}f}\n".format(sum, prec=args.prec))
+print(
+    "\nDeterminant by branchings = {:.{prec}f}\n".format(sum, prec=args.prec)
+)
 
 # Compare to result computed from LU decomposition, if desired
 

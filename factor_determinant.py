@@ -75,7 +75,7 @@ parser.add_argument(
     type=int,
     default=2,
     help="precision for numerical output of arc and branching weights",
-)  
+)
 
 parser.add_argument(
     "--output_dir",
@@ -137,7 +137,9 @@ if args.output_dir:
         else:
             w = 1
             for u, v, d in g.edges(data=True):
-                A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(d["weight"], prec=args.prec)
+                A.get_edge(u, v).attr["label"] = "{:.{prec}f}".format(
+                    d["weight"], prec=args.prec
+                )
                 w *= d["weight"]
             s_w = "{:.{prec}f}".format(w, prec=args.prec)
 

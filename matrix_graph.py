@@ -67,7 +67,9 @@ def create_graph_from_matrix_file(file):
 
     return G
 
+
 # Routine to return a matrix from a graph
+
 
 def create_matrix_from_graph(g):
 
@@ -78,23 +80,30 @@ def create_matrix_from_graph(g):
 
     M = np.zeros((N, N))
 
-    for u,v,a in g.edges(data=True):
+    for u, v, a in g.edges(data=True):
         if u == 0:
-            M[v - 1, v - 1] += a['weight']
+            M[v - 1, v - 1] += a["weight"]
         else:
-            M[u - 1, v - 1] -= a['weight']
-            M[v - 1, v - 1] += a['weight']
+            M[u - 1, v - 1] -= a["weight"]
+            M[v - 1, v - 1] += a["weight"]
 
     return M
 
+
 # Routine to compute matrix determinant by LU decomposition
+
 
 def compute_LU_determinant(file):
 
     m = np.genfromtxt(file)
 
     N = max(
-        np.hstack((np.asarray(m[:, 0], dtype="int"), np.asarray(m[:, 1], dtype="int")))
+        np.hstack(
+            (
+                np.asarray(m[:, 0], dtype="int"),
+                np.asarray(m[:, 1], dtype="int"),
+            )
+        )
     )
 
     mat = np.zeros((N, N))
@@ -103,6 +112,7 @@ def compute_LU_determinant(file):
         mat[int(m[k, 0]) - 1][int(m[k, 1]) - 1] = m[k, 2]
 
     return np.linalg.det(mat)
+
 
 def compute_LU_determinant_from_graph(g):
 

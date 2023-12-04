@@ -50,7 +50,7 @@ parser.add_argument(
     metavar="fixed_col_sum",
     type=float,
     default=None,
-    help="fixed value for each column (default: not set)"
+    help="fixed value for each column (default: not set)",
 )
 
 args = parser.parse_args()
