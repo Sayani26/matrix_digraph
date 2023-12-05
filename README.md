@@ -1,6 +1,6 @@
 # matrix_digraph
 
-Supplementary materials for the paper *Digraph Arborescences and Matrix Determinants*.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
+This repository contains python codes to explore the connection between matrix determinants and directed graphs, as embodied in the matrix-tree and matrix-forest theorems and described in the paper *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
 ## Preliminaries
 
