@@ -2,6 +2,9 @@
 
 This repository contains python codes to explore the connection between matrix determinants and directed graphs, as embodied in the matrix-tree and matrix-forest theorems and described in the paper *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.10268262.svg
+  :target: https://doi.org/10.5281/zenodo.10268262
+
 ## Preliminaries
 
 The python codes in this repository work with $n \times n$ matrix matrices.  Such matrices are denoted $A = \left[a_{ij}\right]$.
@@ -89,3 +92,4 @@ Again, the pdfs will be in the *out_numeric* directory.  It is, of course, possi
      python factor_determinant.py example_data/mat.txt --output_dir out_numeric --calc_type numeric --prec 6
 
 to change from the default precision 2 to 6.
+
