@@ -83,6 +83,11 @@ To compute a random tridiagonal matrix, use the *create_random_matrix.py* code b
 
      python create_random_matrix.py 6 --x_max 2 --tridiag > trid.txt
 
+This matrix can then be used with the tridiagonal matrix determinant code:
+
+     python compute_tridiag_det.py trid.txt --prec 6 --compare
+     
+
 ## Factoring determinants
 
 The code *factor_determinant.py* implements the vertex-isolating approach in the paper *On Directed Graphs with the Same Arborescence Weights Sums* by S. Ghosh and B. S. Meyer.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
