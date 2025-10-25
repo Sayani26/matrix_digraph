@@ -85,7 +85,7 @@ To compute a random tridiagonal matrix, use the *create_random_matrix.py* code b
 
 ## Factoring determinants
 
-The code *factor_determinant.py* implements the vertex-isolating approach in the main *On Directed Graphs with the Same Arborescence Weights Sums* by S. Ghosh and B. S. Meyer.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
+The code *factor_determinant.py* implements the vertex-isolating approach in the paper *On Directed Graphs with the Same Arborescence Weights Sums* by S. Ghosh and B. S. Meyer.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
 
      python factor_determinant.py example_data/mat.txt
 
