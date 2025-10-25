@@ -1,5 +1,5 @@
 # //////////////////////////////////////////////////////////////////////////////
-#  Copyright (c) 2023 Clemson University.
+#  Copyright (c) 2023-2025 Clemson University.
 #
 #  This file was originally written by Sayani Ghosh and Bradley S. Meyer.
 #
@@ -65,16 +65,12 @@ parser.add_argument(
 )
 parser.add_argument(
     "--write_graph",
-    metavar="write_graph",
-    type=bool,
-    default=False,
+    action="store_true",
     help="output the graph",
 )
 parser.add_argument(
     "--compare",
-    metavar="compare",
-    type=bool,
-    default=False,
+    action="store_true",
     help="compare determinant to that computed by LU decomposition",
 )
 

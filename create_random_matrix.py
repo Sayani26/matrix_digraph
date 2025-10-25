@@ -1,5 +1,5 @@
 # //////////////////////////////////////////////////////////////////////////////
-#  Copyright (c) 2023 Clemson University.
+#  Copyright (c) 2023-2025 Clemson University.
 #
 #  This file was originally written by Sayani Ghosh and Bradley S. Meyer.
 #
@@ -53,6 +53,12 @@ parser.add_argument(
     help="fixed value for each column (default: not set)",
 )
 
+parser.add_argument(
+    "--tridiag",
+    action="store_true",
+    help="tridiagonal matrix",
+)
+
 args = parser.parse_args()
 
 A = np.zeros((args.N, args.N))
@@ -65,10 +71,12 @@ for i in range(A.shape[0]):
             else:
                 A[i, j] += args.x_max * rng.random()
         else:
-            aij = args.x_max * rng.random()
-            A[i, j] -= aij
-            A[j, j] += aij
+            if (args.tridiag and abs(i - j) <= 1) or not args.tridiag:
+                aij = args.x_max * rng.random()
+                A[i, j] -= aij
+                A[j, j] += aij
 
 for i in range(A.shape[0]):
     for j in range(A.shape[1]):
-        print(i + 1, j + 1, A[i, j])
+        if A[i, j]:
+            print(i + 1, j + 1, A[i, j])

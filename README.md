@@ -29,7 +29,7 @@ The python code *compute_determinants.py* reads in a matrix, creates a matrix di
 
 The code will print out the graph arborescences, their weights, and the sum (the determinant).  To compare to the determinant computed by LU decomposition, type
 
-     python compute_determinant.py example_data/mat.txt --compare True
+     python compute_determinant.py example_data/mat.txt --compare
 
 To create figures of the arborescences, type, for example,
 
@@ -65,9 +65,23 @@ For a large matrix, computation by a sum over arborescence weights will take a l
     
 and then
 
-    python compute_determinant.py mat.txt --compare True --k 1000
+    python compute_determinant.py mat.txt --compare --k 1000
 
 Increasing the number of terms in the sum (from, say, 1000 to 2000) better approximates the determinant but takes longer.  Note that, for a complete *N* vertex rooted digraph, there will be *(N+1)<sup>(N-1)</sup>* arborescences, so, for *N=6*, there will be 16,807 total arborescences.
+
+## Tridiagonal matrices
+
+The code *compute_tridiag_det.py* implements the tridiagonal matrix determinant recursive approach described in *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  To run the basic calculation, type
+
+     python compute_tridiag_det.py example_data/trid.txt --prec 4
+
+To compare the result to that from LU decomposition, add the keyword argument *compare*:
+
+     python compute_tridiag_det.py example_data/trid.txt --prec 4 --compare
+
+To compute a random tridiagonal matrix, use the *create_random_matrix.py* code but add the *tridiag* keyword argument:
+
+     python create_random_matrix.py 6 --x_max 2 --tridiag > trid.txt
 
 ## Factoring determinants
 
