@@ -2,7 +2,7 @@
 
 This repository contains python codes to explore the connection between matrix determinants and directed graphs, as embodied in the matrix-tree and matrix-forest theorems and described in the paper *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10268261.svg)](https://doi.org/10.5281/zenodo.10268261)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.666173055.svg)](https://doi.org/10.5281/zenodo.10268261)
 
 
 ## Preliminaries
