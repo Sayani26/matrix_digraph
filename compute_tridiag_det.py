@@ -1,5 +1,5 @@
 # //////////////////////////////////////////////////////////////////////////////
-#  Copyright (c) 2023-2025 Clemson University.
+#  Copyright (c) 2025 Clemson University.
 #
 #  This file was originally written by Sayani Ghosh and Bradley S. Meyer.
 #
