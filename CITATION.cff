@@ -8,7 +8,7 @@ authors:
   given-names: "Bradley Stewart"
   orcid: "https://orcid.org/0000-0001-6307-9818"
 title: "Matrix Digraph"
-version: 1.1.1
+version: 1.2.1
 doi: 10.5281/zenodo.10268261
-date-released: 2025-10-28
+date-released: 2025-11-29
 url: "https://github.com/Sayani26/matrix_digraph"
