@@ -91,7 +91,7 @@ This matrix can then be used with the tridiagonal matrix determinant code:
 ## Factoring determinants
 
 The code *factor_determinant.py* implements the vertex-isolating approach in the paper *On Directed Graphs with the Same Sum over
-Arborescence Weights* by S. Ghosh and B. S. Meyer.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
+Arborescence Weights* by S. Ghosh and B. S. Meyer.  The rooting of vertices is either done sequentially or at each step by partitioning the vertices into sets of rooted and non-rooted vertices.  The default is sequential rooting.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
 
      python factor_determinant.py example_data/mat.txt
 
@@ -112,4 +112,10 @@ Again, the pdfs will be in the *out_numeric* directory.  It is, of course, possi
      python factor_determinant.py example_data/mat.txt --output_dir out_numeric --calc_type numeric --prec 6
 
 to change from the default precision 2 to 6.
+
+To run the calculation with partitioned rooting, type
+
+     python factor_determinant.py example_data/mat.txt --rooting partitioned
+
+One may run with different data, different output precision, or a different calculation type.  One may also output the fully isolated graphs.  The sequential calculation requires calculation of *n!* fully isolated graphs.  The partitioned calculation will typically be much slower than the sequential calculation because the former requires *a(n)* fully isolated graphs, where *a(n)* is the ordered Bell number of order *n*.
 
