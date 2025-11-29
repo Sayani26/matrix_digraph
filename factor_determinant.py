@@ -57,16 +57,27 @@ def label_add_func(G, root, u, v):
 parser = argparse.ArgumentParser(
     prog="branching_det",
     description="Factor a matrix determinant via the matrix digraph",
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 
 parser.add_argument("file", metavar="file", type=str, help="matrix text file")
 
 parser.add_argument(
+    "--rooting",
+    metavar="rooting",
+    type=str,
+    choices=["sequential", "partitioned"],
+    default="sequential",
+    help="type of rooting (sequential or partitioned)",
+)
+
+parser.add_argument(
     "--calc_type",
     metavar="calc_type",
     type=str,
+    choices=["label", "numeric"],
     default="label",
-    help='calculation type ("numeric" or "label", default="label")',
+    help="calculation type (label or numeric)",
 )
 
 parser.add_argument(
@@ -107,12 +118,18 @@ rooted_list = []
 if args.calc_type == "label":
     v_det = []
     f = lambda G: label_func(G, v_det, num, rooted_list)
-    rfy.rootify(G, add_func=label_add_func, process_func=f)
+    if args.rooting == "sequential":
+        rfy.sequential(G, add_func=label_add_func, process_func=f)
+    else:
+        rfy.partitioned(G, add_func=label_add_func, process_func=f)
     s_det = "\nDeterminant = " + "+".join(det for det in v_det)
 elif args.calc_type == "numeric":
     det = [0]
     f = lambda G: num_func(G, det, num, rooted_list)
-    rfy.rootify(G, process_func=f)  # Use default add function
+    if args.rooting == "sequential":
+        rfy.sequential(G, process_func=f)
+    else:
+        rfy.partitioned(G, process_func=f)
     s_det = "\nDeterminant = {:.{prec}f}".format(det[0], prec=args.prec)
 else:
     exit("{:s} is an incorrect calcution type".format(args.calc_type))

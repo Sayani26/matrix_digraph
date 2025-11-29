@@ -24,6 +24,7 @@
 
 import networkx as nx
 import copy
+from itertools import combinations
 
 
 def default_add_func(G, root, u, v):
@@ -33,7 +34,7 @@ def default_add_func(G, root, u, v):
         G.add_edge(root, v, weight=G[u][v]["weight"])
 
 
-def rootify(G, add_func=None, process_func=None):
+def sequential(G, add_func=None, process_func=None):
 
     #   Find the root
 
@@ -70,5 +71,72 @@ def rootify(G, add_func=None, process_func=None):
                     default_add_func(G_c, root[0], u, v)
                 G_c.remove_edge(u, v)
 
-            rootify(G_c, add_func=add_func, process_func=process_func)
+            sequential(G_c, add_func=add_func, process_func=process_func)
             processed_root_edges.append((root[0], r))
+
+
+def get_partitions(original_set):
+    assert len(original_set) >= 2, "Set cannot be partitioned."
+
+    partitions = []
+    for i in range(1, len(original_set) // 2 + 1):
+        for subset1_tuple in combinations(original_set, i):
+            subset1 = set(subset1_tuple)
+            subset2 = original_set - subset1
+
+            if subset1 and subset2:
+                partition_pair = tuple(
+                    sorted((subset1, subset2), key=lambda x: sorted(list(x)))
+                )
+                if partition_pair not in partitions:
+                    partitions.append(partition_pair)
+    return partitions
+
+
+def partitioned(G, add_func=None, process_func=None):
+
+    #   Find the root
+
+    root = [node for node in G.nodes if G.in_degree(node) == 0]
+
+    if len(root) != 1:
+        return
+
+    #   Find non-isolated nodes
+
+    s_r = {v for u, v in G.out_edges(root[0]) if G.out_degree[v] > 0}
+
+    #   Process if no non-isolated nodes
+
+    if len(s_r) == 0:
+        if process_func:
+            process_func(G)
+        return
+
+    #   Otherwise recurse
+
+    else:
+        s_r.add(root[0])
+        for p in get_partitions(s_r):
+            G_c = copy.deepcopy(G)
+            s_rooted = p[0]
+            s_not_rooted = p[1]
+            if root[0] not in p[1]:
+                s_not_rooted = p[0]
+                s_rooted = p[1]
+            for w in s_not_rooted:
+                if w != root[0]:
+                    G_c.remove_edge(root[0], w)
+            for w in s_rooted:
+                for e in [(u, v) for u, v in G.in_edges(w) if u != root[0]]:
+                    G_c.remove_edge(*e)
+            for w in s_rooted:
+                for u, v in G.out_edges(w):
+                    if G_c.has_edge(u, v):
+                        if add_func:
+                            add_func(G_c, root[0], u, v)
+                        else:
+                            default_add_func(G_c, root[0], u, v)
+                        G_c.remove_edge(u, v)
+
+            partitioned(G_c, add_func=add_func, process_func=process_func)
