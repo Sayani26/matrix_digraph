@@ -59,7 +59,17 @@ parser.add_argument(
     help="tridiagonal matrix",
 )
 
+parser.add_argument(
+    "--pentadiag",
+    action="store_true",
+    help="pentadiagonal matrix",
+)
+
 args = parser.parse_args()
+
+assert not (
+    args.tridiag and args.pentadiag
+), "Cannot simultaneously request tridiagonal and pentadiagonal matrix."
 
 A = np.zeros((args.N, args.N))
 
@@ -71,7 +81,11 @@ for i in range(A.shape[0]):
             else:
                 A[i, j] += args.x_max * rng.random()
         else:
-            if (args.tridiag and abs(i - j) <= 1) or not args.tridiag:
+            if (
+                (args.tridiag and abs(i - j) <= 1)
+                or (args.pentadiag and abs(i - j) <= 2)
+                or not (args.tridiag or args.pentadiag)
+            ):
                 aij = args.x_max * rng.random()
                 A[i, j] -= aij
                 A[j, j] += aij
