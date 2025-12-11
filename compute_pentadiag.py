@@ -25,7 +25,7 @@ import matrix_graph as mg
 
 parser = argparse.ArgumentParser(
     prog="branching_det",
-    description="Compute the determinant for a tridiagonal matrix",
+    description="Compute the determinant for a pentadiagonal matrix",
 )
 
 parser.add_argument(
@@ -51,7 +51,7 @@ args = parser.parse_args()
 
 G = mg.create_graph_from_matrix_file(args.file)
 
-# Check that tridiagonal
+# Check that pentadiagonal
 
 for u, v in G.edges():
     if u > 0:
@@ -60,46 +60,68 @@ for u, v in G.edges():
         ), f"Arc ({u}, {v}) should not be in tridiagonal graph."
 
 # Compute determinant recursively
+#
+# Notes:
+#
+#   det_n = current determinant
+#   a_n = D_{(n)}
+#   b_n = D_{(n-1)}
+#   c_n = D_{(n-1, n)}
+#   d_n = D_{(n)} with no path to n-1
+#   e_n = D_{(n-1)} with no path to n
+#
+#   For the arcs, p refers to n+1, n to n, and m to n-1.
 
-det = G[0][1]["weight"]
-a = 1
-b = 0
-c = 0
-d = 0
-e = 0
+det_n = G[0][1]["weight"]
+a_n = 1
+b_n = 0
+c_n = 0
+d_n = 0
+e_n = 0
 
 for i in range(2, G.number_of_nodes()):
-    v_pp = G[0][i]["weight"]
-    v_np = G[i - 1][i]["weight"]
-    v_pn = G[i][i - 1]["weight"]
-    v_pm = 0
-    v_mp = 0
+    v_pp = v_np = v_pn = v_pm = v_mp = 0
+    if G.has_edge(0, i):
+        v_pp = G[0][i]["weight"]
+    if G.has_edge(i - 1, i):
+        v_np = G[i - 1][i]["weight"]
+    if G.has_edge(i, i - 1):
+        v_pn = G[i][i - 1]["weight"]
     if i > 2:
-        v_pm = G[i][i - 2]["weight"]
-        v_mp = G[i - 2][i]["weight"]
+        if G.has_edge(i, i - 2):
+            v_pm = G[i][i - 2]["weight"]
+        if G.has_edge(i - 2, i):
+            v_mp = G[i - 2][i]["weight"]
 
-    a_n = det + v_pn * a + v_pm * b + v_pn * v_pm * c
-    b_n = a * (v_mp + v_np + v_pp) + v_pm * (v_np + v_pp) * c
-    c_n = a + v_pm * c
-    d_n = det + v_pm * e
-    e_n = v_pp * a + v_mp * d + v_pp * v_pm * c
+    # Update values at n+1 based on values at n
 
-    det = (
-        (v_mp + v_np + v_pp) * det
-        + v_pp * v_pn * a
-        + v_pp * v_pm * b
-        + v_pp * v_pn * v_pm * c
-        + v_pn * v_mp * d
-        + v_pm * v_np * e
+    a_p = det_n + v_pn * a_n + v_pm * b_n + v_pn * v_pm * c_n
+    b_p = a_n * (v_mp + v_np + v_pp) + v_pm * (v_np + v_pp) * c_n
+    c_p = a_n + v_pm * c_n
+    d_p = det_n + v_pm * e_n
+    e_p = v_pp * a_n + v_mp * d_n + v_pp * v_pm * c_n
+
+    det_p = (
+        (v_mp + v_np + v_pp) * det_n
+        + v_pp * v_pn * a_n
+        + v_pp * v_pm * b_n
+        + v_pp * v_pn * v_pm * c_n
+        + v_pn * v_mp * d_n
+        + v_pm * v_np * e_n
     )
-    a = a_n
-    b = b_n
-    c = c_n
-    d = d_n
-    e = e_n
+
+    # Set updated to previous values for next iteration
+
+    det_n = det_p
+
+    a_n = a_p
+    b_n = b_p
+    c_n = c_p
+    d_n = d_p
+    e_n = e_p
 
 
-print(f"\nDeterminant by recursion: {det:.{args.prec}f}")
+print(f"\nDeterminant by recursion: {det_n:.{args.prec}f}")
 
 # Compare to result computed from LU decomposition, if desired
 
