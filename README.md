@@ -69,23 +69,36 @@ and then
 
 Increasing the number of terms in the sum (from, say, 1000 to 2000) better approximates the determinant but takes longer.  Note that, for a complete *N* vertex rooted digraph, there will be *(N+1)<sup>(N-1)</sup>* arborescences, so, for *N=6*, there will be 16,807 total arborescences.
 
-## Tridiagonal matrices
+## Pentadiagonal matrices
 
-The code *compute_tridiag_det.py* implements the tridiagonal matrix determinant recursive approach described in *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  To run the basic calculation, type
+The code *compute_pentadiag_det.py* implements the pentadiagonal matrix determinant recursive approach described in *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  To run the basic calculation, type
 
-     python compute_tridiag_det.py example_data/trid.txt --prec 4
+     python compute_pentadiag_det.py example_data/penta.txt --prec 4
 
 To compare the result to that from LU decomposition, add the keyword argument *compare*:
 
-     python compute_tridiag_det.py example_data/trid.txt --prec 4 --compare
+     python compute_pentadiag_det.py example_data/penta.txt --prec 4 --compare
 
-To compute a random tridiagonal matrix, use the *create_random_matrix.py* code but add the *tridiag* keyword argument:
+To compute a random pentadiagonal matrix, use the *create_random_matrix.py* code but add the *pentadiag* keyword argument:
+
+     python create_random_matrix.py 6 --x_max 2 --pentadiag > penta.txt
+
+This matrix can then be used with the pentadiagonal matrix determinant code:
+
+     python compute_pentadiag_det.py penta.txt --prec 6 --compare
+
+The code can also be used on tridiagonal matrices since the recursion relations for those matrices are just a subset of the ones for the pentadiagonal matrices.  To do so, type:
+
+     python compute_pentadiag_det.py example_data/trid.txt --prec 6 --compare
+
+You can also create a random tridiagonal matrix for use with the code by typing:
 
      python create_random_matrix.py 6 --x_max 2 --tridiag > trid.txt
 
-This matrix can then be used with the tridiagonal matrix determinant code:
+and then run the code with that matrix:
 
-     python compute_tridiag_det.py trid.txt --prec 6 --compare
+     python compute_pentadiag_det.py trid.txt --prec 6 --compare
+
      
 
 ## Factoring determinants
