@@ -39,7 +39,7 @@ The output files are pdfs in the *out* directory.  They are labeled in decreasin
 
      python compute_determinant.py example_data/mat2.txt --output_dir out --prec 5
 
-The files *example_data/mat3.txt* and *example_data/mat4.txt* provide examples of *reduced matrices*.  Use these data as example input for studying the rooted version of the *all minors theorem*.
+The files *example_data/mat3.txt* and *example_data/mat4.txt* provide examples of *reduced matrices*.  Use these data as example input for studying the rooted version of the *all minors theorem*.  In particular, *example_data/mat3.txt* gives the case where only arborescences rooted at vertex 3 contribute to the determinant while *example_data/mat4.txt* gives the case that only arborescences rooted at vertex 3 and with a path to vertex 1 in net contribute to the determinant.
 
 ## Create random matrices
 
