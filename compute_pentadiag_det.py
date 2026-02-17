@@ -24,7 +24,7 @@ import argparse
 import matrix_graph as mg
 
 parser = argparse.ArgumentParser(
-    prog="branching_det",
+    prog="compute_pentadiag_det",
     description="Compute the determinant for a pentadiagonal matrix",
 )
 
@@ -63,7 +63,7 @@ for u, v in G.edges():
 #
 # Notes:
 #
-#   det_n = current determinant
+#   det = current determinant
 #   a_n = D_{(n)}
 #   b_n = D_{(n-1)}
 #   c_n = D_{(n-1, n)}
@@ -72,7 +72,7 @@ for u, v in G.edges():
 #
 #   For the arcs, p refers to n+1, n to n, and m to n-1.
 
-det_n = G[0][1]["weight"]
+det = G[0][1]["weight"]
 a_n = 1
 b_n = 0
 c_n = 0
@@ -95,14 +95,14 @@ for i in range(2, G.number_of_nodes()):
 
     # Update values at n+1 based on values at n
 
-    a_p = det_n + v_pn * a_n + v_pm * b_n + v_pn * v_pm * c_n
+    a_p = det + v_pn * a_n + v_pm * b_n + v_pn * v_pm * c_n
     b_p = a_n * (v_mp + v_np + v_pp) + v_pm * (v_np + v_pp) * c_n
     c_p = a_n + v_pm * c_n
-    d_p = det_n + v_pm * e_n
+    d_p = det + v_pm * e_n
     e_p = v_pp * a_n + v_mp * d_n + v_pp * v_pm * c_n
 
-    det_p = (
-        (v_mp + v_np + v_pp) * det_n
+    det = (
+        (v_mp + v_np + v_pp) * det
         + v_pp * v_pn * a_n
         + v_pp * v_pm * b_n
         + v_pp * v_pn * v_pm * c_n
@@ -112,16 +112,13 @@ for i in range(2, G.number_of_nodes()):
 
     # Set updated to previous values for next iteration
 
-    det_n = det_p
-
     a_n = a_p
     b_n = b_p
     c_n = c_p
     d_n = d_p
     e_n = e_p
 
-
-print(f"\nDeterminant by recursion: {det_n:.{args.prec}f}")
+print(f"\nDeterminant by recursion: {det:.{args.prec}f}")
 
 # Compare to result computed from LU decomposition, if desired
 

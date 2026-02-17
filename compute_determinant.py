@@ -39,7 +39,7 @@ def k_branchings(G, k, weight="lweight"):
 
 
 parser = argparse.ArgumentParser(
-    prog="branching_det",
+    prog="compute_determinant",
     description="Compute a matrix determinant from branchings in the matrix digraph",
 )
 
