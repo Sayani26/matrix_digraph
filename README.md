@@ -1,6 +1,6 @@
 # matrix_digraph
 
-This repository contains python codes to explore the connection between matrix determinants and directed graphs, as embodied in the matrix-tree and matrix-forest theorems and described in the paper *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
+This repository contains python codes to explore the connection between matrix determinants and directed graphs, as embodied in the matrix-tree and matrix-forest theorems and described in the paper *A Loop-Free Matrix-Tree Theorem for General Matrices* by S. Ghosh and B. S. Meyer.  The python codes may require installation of the packages [numpy](https://numpy.org) and [networkx](https://networkx.org).  To create graph figures, install [pygraphviz](https://pygraphviz.github.io).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.666173055.svg)](https://doi.org/10.5281/zenodo.10268261)
 
@@ -71,7 +71,7 @@ Increasing the number of terms in the sum (from, say, 1000 to 2000) better appro
 
 ## Tridiagonal matrices
 
-The code *compute_tridiag_det.py* implements the tridiagonal matrix determinant recursive approach described in *Digraph Arborescences and Matrix Determinants* by S. Ghosh and B. S. Meyer.  To run the basic calculation, type
+The code *compute_tridiag_det.py* implements the tridiagonal matrix determinant recursive relation described in *A Loop-Free Matrix-Tree Theorem for General Matrices* by S. Ghosh and B. S. Meyer.  To run the basic calculation, type
 
      python compute_tridiag_det.py example_data/trid.txt --prec 4
 
@@ -87,35 +87,4 @@ This matrix can then be used with the tridiagonal matrix determinant code:
 
      python compute_tridiag_det.py trid.txt --prec 6 --compare
      
-
-## Factoring determinants
-
-The code *factor_determinant.py* implements the vertex-isolating approach in the paper *On Directed Graphs with the Same Sum over
-Arborescence Weights* by S. Ghosh and B. S. Meyer.  The rooting of vertices is either done sequentially or at each step by partitioning the vertices into sets of rooted and non-rooted vertices.  The default is sequential rooting.  The output determinant is either a numerical value or a sum of products of arc weight labels.  The default calculation is for arc weight labels.  To run the basic calculation, type
-
-     python factor_determinant.py example_data/mat.txt
-
-The output shows the determinant value for the input matrix in terms of arc labels, as computed by the factorization/isolation procedure described in the paper.  To instead compute the numerical value of the determinant, type
-
-     python factor_determinant.py example_data/mat.txt --calc_type numeric
-
-To output the individual fully isolated (rooted) graphs for the matrix, type
-
-     python factor_determinant.py example_data/mat.txt --output_dir out_label --calc_type label
-
-The output pdfs will be in the directory *out_label*.  Note that, in this case, the *--calc_type label* option is not necessary since the label calculation is the default.  To produce the individual numerical graphs, type
-
-     python factor_determinant.py example_data/mat.txt --output_dir out_numeric --calc_type numeric
-
-Again, the pdfs will be in the *out_numeric* directory.  It is, of course, possible to use other input matrices, for example, use *example_data/mat2.txt* or a matrix computed with the *compute_random_matrix.py* code as input.  For numerical calculations, the output precision can be set with the *prec* option.  For example, type
-
-     python factor_determinant.py example_data/mat.txt --output_dir out_numeric --calc_type numeric --prec 6
-
-to change from the default precision 2 to 6.
-
-To run the calculation with partitioned rooting, type
-
-     python factor_determinant.py example_data/mat.txt --rooting partitioned
-
-One may run with different data, different output precision, or a different calculation type.  One may also output the fully isolated graphs.  The sequential calculation requires calculation of *n!* fully isolated graphs.  The partitioned calculation will typically be much slower than the sequential calculation because the former requires *a(n)* fully isolated graphs, where *a(n)* is the ordered Bell number of order *n*.
 
